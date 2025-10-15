@@ -1,13 +1,16 @@
 import os
 from dotenv import load_dotenv
+import streamlit as st
 import google.generativeai as genai
 
-# Load API key
+# Load .env file locally
 load_dotenv()
-API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Try to get API key from environment variables (local or deployment)
+API_KEY = os.getenv("GOOGLE_API_KEY") or st.secrets.get("GOOGLE_API_KEY")
 
 if not API_KEY:
-    raise ValueError("❌ GOOGLE_API_KEY not found in .env file")
+    raise ValueError("❌ GOOGLE_API_KEY not found. Set it in .env or Streamlit secrets")
 
 # Configure Gemini client
 genai.configure(api_key=API_KEY)

@@ -109,16 +109,20 @@ Below are the high-quality prompts that were used throughout the **creation proc
 > Provide ATS-friendly feedback such as missing skills, keyword density, and improvement tips.
 
 ---
-
 ### 📊 5. Visualization and Dashboard Design  
 > Suggest an elegant way to visualize resume insights using charts in Streamlit.  
 > Include bar charts, pie charts, or progress bars to represent keyword match rates and skill relevance.
+---
+###  6 Live Demo
 
 ---
 ### 🚀 7. Enhancement Brainstorming  
 > Suggest creative **future enhancements** for an AI Resume Screening system using LLMs and cloud integration.  
 > Include ideas like ATS optimization, resume rewriting, and cloud storage features.
 
+---
+### 8. Deployement Link
+https://hirelens03.streamlit.app/
 ---
 
 
