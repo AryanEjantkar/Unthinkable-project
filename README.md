@@ -114,6 +114,7 @@ Below are the high-quality prompts that were used throughout the **creation proc
 > Include bar charts, pie charts, or progress bars to represent keyword match rates and skill relevance.
 ---
 ###  6 Live Demo
+[Watch Demo video](https://drive.google.com/file/d/1bVY3fu1aikhlyG6B98dNxlKnDCfzLXBJ/view?usp=sharing)
 
 ---
 ### 🚀 7. Enhancement Brainstorming  
