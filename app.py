@@ -5,7 +5,7 @@ from llm_matcher import match_resume_with_job
 from PIL import Image
 import base64, io
 
-st.set_page_config(page_title="HireLens", layout="wide")
+st.set_page_config(page_title="HireLens", page_icon="Favicon.png", layout="wide")
 
 # --------------------- STYLING ---------------------
 st.markdown("""

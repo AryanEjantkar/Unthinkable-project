@@ -59,7 +59,7 @@ An AI-powered resume screening system that uses **LLMs** (like Gemini / GPT) to 
 ---
 
 ## ⚙️ Installation & Usage
- git clone https://github.com/<your-username>/HireLens.git
+ git clone https://github.com/AryanEjantkar/Unthinkable-project.git
  cd HireLens
  pip install -r requirements.txt
  streamlit run app.py
