@@ -138,12 +138,14 @@ except:
 st.markdown("<div class='app-title'>HireLens</div>", unsafe_allow_html=True)
 
 # --------------------- JOB DESCRIPTION ---------------------
-st.markdown("""
-<div class="search-container">
-  <input type="text" id="jobdesc" name="jobdesc" placeholder="Enter job description here..." />
-  <span class="search-icon">🔍</span>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("<h4 style='color:#0d47a1;'>Enter Job Description</h4>", unsafe_allow_html=True)
+job_description = st.text_input("Job Description", placeholder="Enter job description here...", label_visibility="collapsed")
+search_clicked = st.button("🔍 Search Job Description")
+
+if search_clicked and job_description:
+    st.session_state['job_desc'] = job_description.strip()
+    st.success("✅ Job description updated successfully!")
+
 
 # --------------------- UPLOAD SECTION ---------------------
 uploaded_files = st.file_uploader(
@@ -170,12 +172,22 @@ with col2:
 # --------------------- LOGIC ---------------------
 if analyze_button and uploaded_files:
     results = []
+    job_desc = st.session_state.get('job_desc', 'Job Description Placeholder')
+
     with st.spinner("Analyzing resumes... ⏳"):
         for file in uploaded_files:
             resume_text = extract_text_from_pdf(file)
-            ai_result = match_resume_with_job(resume_text, "Job Description Placeholder")
+            ai_result = match_resume_with_job(resume_text, job_desc)
+            
+            # --- safer score extraction ---
+            import re
             score_line = [line for line in ai_result.split("\n") if "Score" in line]
-            score = int(score_line[0].split(":")[1].split("/")[0].strip()) if score_line else 0
+            score = 0
+            if score_line:
+                match = re.search(r"(\d+(\.\d+)?)", score_line[0])
+                if match:
+                    score = float(match.group(1))
+
             results.append({"Candidate": file.name, "Score": score, "AI Feedback": ai_result})
 
     df = pd.DataFrame(results).sort_values(by="Score", ascending=False)
@@ -183,14 +195,13 @@ if analyze_button and uploaded_files:
         st.markdown(f"<div class='score-box'>", unsafe_allow_html=True)
         st.write(f"### 📄 {row['Candidate']}")
         st.write(f"**Resume Score: {row['Score']}/10**")
-        st.progress(row["Score"]/10)
+        st.progress(min(max(row["Score"] / 10, 0), 1))
         st.write("**ATS Compatibility:**")
-        st.progress(row["Score"]/10)
+        st.progress(min(max(row["Score"] / 10, 0), 1))
         st.write("**Match with Job Description:**")
-        st.progress(row["Score"]/10)
+        st.progress(min(max(row["Score"] / 10, 0), 1))
         st.caption(f"AI Feedback: {row['AI Feedback']}")
         st.markdown("</div>", unsafe_allow_html=True)
-
 elif clear_button:
     st.experimental_rerun()
 else:
