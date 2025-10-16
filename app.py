@@ -127,7 +127,7 @@ body, .main {
 
 # --------------------- HEADER ---------------------
 try:
-    logo = Image.open("loOGO.png")
+    logo = Image.open("icon.png")
     buffered = io.BytesIO()
     logo.save(buffered, format="PNG")
     img_base64 = base64.b64encode(buffered.getvalue()).decode()
