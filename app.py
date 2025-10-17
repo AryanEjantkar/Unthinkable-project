@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from resume_parser import extract_text_from_pdf
+from resume_parser import extract_text_from_resume
 from llm_matcher import match_resume_with_job
 from PIL import Image
 import base64, io
@@ -149,8 +149,8 @@ if search_clicked and job_description:
 
 # --------------------- UPLOAD SECTION ---------------------
 uploaded_files = st.file_uploader(
-    "Upload resumes (PDF only)",
-    type=["pdf"],
+    "Upload resumes (PDF and Word documents)",
+    type=["pdf", "docx"],
     accept_multiple_files=True
 )
 
@@ -176,7 +176,7 @@ if analyze_button and uploaded_files:
 
     with st.spinner("Analyzing resumes... ⏳"):
         for file in uploaded_files:
-            resume_text = extract_text_from_pdf(file)
+            resume_text = extract_text_from_resume(file)
             ai_result = match_resume_with_job(resume_text, job_desc)
             
             # --- safer score extraction ---

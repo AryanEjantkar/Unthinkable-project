@@ -1,9 +1,22 @@
-import fitz  # PyMuPDF
+import pdfplumber
+import docx
+from io import BytesIO
 
-def extract_text_from_pdf(file):
-    """Extract text from an uploaded PDF resume."""
+def extract_text_from_resume(uploaded_file):
     text = ""
-    with fitz.open(stream=file.read(), filetype="pdf") as pdf:
-        for page in pdf:
-            text += page.get_text("text")
+    file_type = uploaded_file.name.split(".")[-1].lower()
+
+    if file_type == "pdf":
+        with pdfplumber.open(uploaded_file) as pdf:
+            for page in pdf.pages:
+                text += page.extract_text() or ""
+
+    elif file_type == "docx":
+        doc = docx.Document(BytesIO(uploaded_file.read()))
+        for para in doc.paragraphs:
+            text += para.text + "\n"
+
+    else:
+        text = "Unsupported file format."
+
     return text.strip()
